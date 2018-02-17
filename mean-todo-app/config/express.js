@@ -7,7 +7,7 @@ var express = require('express'),
 module.exports = function() {
 	var app = express();
 	if (process.env.NODE_ENV === 'development') {
-		app.uses(morgan('dev'));
+		app.use(morgan('dev'));
 	} else if (process.env.NODE_ENV ==='production' ){
 		app.use(compress());
 	}
@@ -19,7 +19,6 @@ module.exports = function() {
 
 	require('../app/routes/index.server.routes.js')(app);
 
-	return app;
 };
 
 
