@@ -17,7 +17,7 @@ module.exports = function() {
 12 // APP CONFIGURATION ---------------------
 13 // use body parser so we can grab information from POST requests
   */
-  
+
   app.use(bodyParser.urlencoded({
     extended: true
   }));
@@ -31,6 +31,8 @@ module.exports = function() {
   app.set('views', './app/views');
   app.set('view engine', 'ejs');
   require('../app/routes/index.server.routes.js')(app);
+  require('../app/routes/students.server.routes.js')(app);
+  
   app.use(express.static('./public'));
   return app;
 };
