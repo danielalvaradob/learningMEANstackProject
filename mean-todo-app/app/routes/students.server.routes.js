@@ -6,7 +6,8 @@ var students = require('../../app/controllers/students.server.controller');
 
      app.route('/students/:studentID')
      .get(students.read)
-     .put(students.update);
+     .put(students.update)
+     .delete(students.delete);
 
      app.param('studentID',students.studentByID);
 };

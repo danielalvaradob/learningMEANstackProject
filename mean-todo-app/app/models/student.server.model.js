@@ -4,9 +4,22 @@ var mongoose = require('mongoose'),
 var StudentSchema = new Schema({
 	nombre: String,
 	apellidos: String,
-	carnet: String,
-	email: String
+	carnet:{
+		type: String,
+		unique: true,
+		index: true
+	},
+	email: String,
+	created: {
+		type: Date,
+		default: Date.now
+	}
 });
+
+StudentSchema.virtual('fullName').get(function() {
+     return this.nombre + ' ' + this.apellidos;
+});
+StudentSchema.set('toJSON', { getters: true, virtuals: true });
 
 mongoose.model('Student',StudentSchema);
 
