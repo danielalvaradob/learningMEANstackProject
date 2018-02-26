@@ -17,6 +17,7 @@ var StudentSchema = new Schema({
 });
 
 StudentSchema.virtual('fullName').get(function() {
+	console.log(this.nombre);
      return this.nombre + ' ' + this.apellidos;
 });
 StudentSchema.set('toJSON', { getters: true, virtuals: true });

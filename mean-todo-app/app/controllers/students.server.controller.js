@@ -2,19 +2,18 @@ var Student = require('mongoose').model('Student');
 
 //guarda un objeto estudiante en la base de datos
 exports.create = function(req, res, next) {
-	var student = new Student(req.body);
+var student = new Student(req.body);
 	student.save(function(err) {
-		if (err) {
-	        return next(err);
-	    } else {
-	        res.json(student);
-	    	 }
-		}
-		); 
-};
+    if (err) {
+    	return next(err);
+   	} else {
+    	res.json(student);
+       }
+}); };
+ 
 
 exports.list = function(req,res) {
-	Student.find({},function(err,users) {
+	Student.find({},function(err,students) {
 		if (err) {
 			return next(err);
 		} else {
@@ -45,7 +44,7 @@ exports.studentByID = function(req,res,next,id) {
 
 
 exports.update = function(req,res,next) {
-	Student.findByIdAndUpdate(req.student.id, req.body,function(err,user) {
+	Student.findByIdAndUpdate(req.student.id, req.body,function(err,student) {
 		if (err) {
 			return next(err);
 		} else {
@@ -64,13 +63,3 @@ exports.delete = function(req,res,next) {
 	})
 };
 
-/*
-exports.update = function(req, res, next) {
-     User.findByIdAndUpdate(req.user.id, req.body, function(err, user) {
-     if (err) {
-      return next(err);
-    } else {
-      res.json(user);
-} });
-};
-*/
