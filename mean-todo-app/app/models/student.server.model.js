@@ -13,7 +13,8 @@ var StudentSchema = new Schema({
 	created: {
 		type: Date,
 		default: Date.now
-	}
+	},
+	password: String
 });
 
 StudentSchema.virtual('fullName').get(function() {
