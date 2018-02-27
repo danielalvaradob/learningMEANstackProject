@@ -8,8 +8,8 @@
      passport.deserializeUser(function(id, done) {
        Student.findOne({
          _id: id
-       }, '-password -salt', function(err, user) {
-         done(err, user);
+       }, '-password -salt', function(err, student) {
+         done(err, student);
        });
 });
      require('./strategies/local.js')();

@@ -1,4 +1,5 @@
 var mongoose = require('mongoose'),
+       crypto = require('crypto'),
 	Schema = mongoose.Schema;
 
 var StudentSchema = new Schema({
@@ -10,7 +11,10 @@ var StudentSchema = new Schema({
 		index: true,
 		trim: true
 	},
-	email: String,
+	email: {
+       type: String,
+       match: [/.+\@.+\..+/, "Please fill a valid e-mail address"]
+     },
 	created: {
 		type: Date,
 		default: Date.now
@@ -42,9 +46,9 @@ StudentSchema.virtual('fullName').get(function() {
 
 StudentSchema.pre('save',function(next) {
 	if (this.password) {
-		this.salt = new 
-			Buffer(crypto.randomBytes(16).toString('base64'),'base64');
-		this.password = this.hashPassword(this.password);
+		this.salt = new
+      		Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
+    	this.password = this.hashPassword(this.password);
 	}
 	next();
 });
@@ -65,7 +69,7 @@ StudentSchema.methods.authenticate = function(password) {
      var possibleUsername = username + (suffix || '');
      _this.findOne({
        username: possibleUsername
-     }, function(err, user) {
+     }, function(err, student) {
        if (!err) {
          if (!student) {
            callback(possibleUsername);
