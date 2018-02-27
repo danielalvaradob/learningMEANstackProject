@@ -4,9 +4,9 @@
        Student = require('mongoose').model('Student');
    module.exports = function() {
      passport.use(new LocalStrategy(function(username, password, done) {
-       Sttudent.findOne({
-         username: username
-       }, function(err, user) {
+       Student.findOne({
+         carnet: username
+       }, function(err, student) {
          if (err) {
            return done(err);
          }
@@ -19,6 +19,6 @@
            return done(null, false, {
              message: 'Invalid password'
 }); }
-         return done(null, user);
+         return done(null, student);
  }); }));
 };
