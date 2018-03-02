@@ -1,29 +1,28 @@
-/*var students = require('../../app/controllers/students.server.controller');
-   module.exports = function(app) {
-     app.route('/students').
-     post(students.create).
-     get(students.list);
+// Invoke 'strict' JavaScript mode
+'use strict';
 
-     app.route('/students/:studentID')
-     .get(students.read)
-     .put(students.update)
-     .delete(students.delete);
-
-     app.param('studentID',students.studentByID);
-};
-*/
+// Load the module dependencies
 var users = require('../../app/controllers/users.server.controller'),
-       passport = require('passport');
-   module.exports = function(app) {
-     app.route('/signup')
-        .get(users.renderSignup)
-        .post(users.signup);
-     app.route('/signin')
-        .get(users.renderSignin)
-        .post(passport.authenticate('local', {
-          successRedirect: '/',
-          failureRedirect: '/signin',
-          failureFlash: true
-}));
-     app.get('/signout', users.signout);
-   };
+  passport = require('passport');
+
+// Define the routes module' method
+module.exports = function(app) {
+  // Set up the 'signup' routes 
+  app.post('/signup', passport.authenticate('local-signup', {
+        successRedirect : '/profile', // redirect to the secure profile section
+        failureRedirect : '/signup', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+    }));
+
+app.post('/login', passport.authenticate('local-login', {
+        successRedirect : '/profile', // redirect to the secure profile section
+        failureRedirect : '/login', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+    }));
+
+  // Set up the 'signout' route
+  app.get('/signout', users.signout);
+};
+
+
+

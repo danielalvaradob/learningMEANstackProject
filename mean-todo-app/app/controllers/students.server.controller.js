@@ -64,6 +64,26 @@ exports.delete = function(req,res,next) {
 	})
 };
 
+
+
+// Create a new 'studentByID' controller method
+exports.studentByID = function(req, res, next, id) {
+  // Use the 'User' Student 'findOne' method to retrieve a specific user
+  Student.findOne({
+    _id: id
+  }, function(err, student) {
+    if (err) {
+      // Call the next middleware with an error message
+      return next(err);
+    } else {
+      // Set the 'req.student' property
+      req.student = student;
+
+      // Call the next middleware
+      next();
+    }
+  });
+};
 */
 
 

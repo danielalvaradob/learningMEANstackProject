@@ -8,12 +8,12 @@ var StudentSchema = new Schema({
 	carnet:{
 		type: String,
 		unique: true,
-		index: true,
-		trim: true
+		required: true
+		
 	},
 	email: {
        type: String,
-       match: [/.+\@.+\..+/, "Please fill a valid e-mail address"]
+       match: [/.+\@.+\..+/, "Por favor ingrese un correo válido"]
      },
 	created: {
 		type: Date,
@@ -24,7 +24,7 @@ var StudentSchema = new Schema({
 		validate: [
 		function(password) {
 			return password && password.length > 2;
-		},'Password should be longer'
+		},'Contraseña debe ser mas larga'
 		]
 	},
 	salt: {
@@ -88,6 +88,15 @@ salt property, which you'll use to hash your password; a provider property, whic
 indicate the strategy used to register the user; a providerId property, which will 
 indicate the user identi er for the authentication strategy; and a providerData property,
 which you'll later use to store the user object retrieved from OAuth providers.
+// Create the 'findOneByUsername' static method
+StudentSchema.statics.findOneBycarnet = function(carnet, callback) {
+	// Use the 'findOne' method to retrieve a user document
+	this.findOne({
+		carnet: new RegExp(carnet, 'i')
+	}, callback);
+};
+
+
 */
 
 StudentSchema.set('toJSON', { getters: true, virtuals: true });
